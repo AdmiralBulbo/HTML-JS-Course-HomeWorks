@@ -1,0 +1,28 @@
+.col-md-3 {
+    text-align: center;
+}
+
+.col-6 {
+    text-align: center;
+}
+
+.col-3 {
+    text-align: center;
+}
+
+img {
+    width: 150px;
+    height: 200px;
+    margin-bottom: 10px;
+    box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+
+.img1 {
+    width: 0;
+    height: 0;
+}
+
+@media (max-width: 767.98px) {
+    img { width: 75px; height: 100px;}
+    .img1 { width: 150px; height: 200px; }
+}
