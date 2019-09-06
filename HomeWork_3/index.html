@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Creating Dynamic Tabs in Bootstrap 4 via JavaScript</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="index.js"></script>
+    <style>
+        .bs-example {
+            margin: 20px;
+        }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("#myTab a").click(function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="bs-example">
+        <ul id="myTab" class="nav nav-pills">
+            <li class="nav-item">
+                <a href="#create" class="nav-link active">Create</a>
+            </li>
+            <li class="nav-item">
+                <a href="#read" class="nav-link">Read</a>
+            </li>
+            <li class="nav-item">
+                <a href="#update" class="nav-link">Update</a>
+            </li>
+            <li class="nav-item">
+                <a href="#delete" class="nav-link">Delete</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="create">
+                <h4 class="mt-2">Create worker</h4>
+                <form id='createForm'>
+                    <div class="form-group">
+                        <label for="cname">Name</label>
+                        <input type="text" class="form-control" id="cname" placeholder="Enter worker name">
+                    </div>
+                    <div class="form-group">
+                        <label for="cage">Age</label>
+                        <input type="number" class="form-control" id="cage" placeholder="Enter age">
+                    </div>
+                    <div class="form-group">
+                        <label for="csex">Gender</label>
+                        <select class='form-control' id='csex'>
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                    </div>
+                    <button type="submit" id='cbutton' class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="tab-pane fade" id="read">
+                <h4 class="mt-2">All workers</h4>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Age</th>
+                            <th scope="col">Gender</th>
+                        </tr>
+                    </thead>
+                    <tbody id='rTBody'>
+                        <!--  <tr>
+                                <th scope="row">1</th>
+                                <td>1</td>
+                                <td>2</td>
+                                <td>3</td> 
+                            </tr> -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane fade" id="update">
+                <h4 class="mt-2">Update worker</h4>
+            </div>
+            <div class="tab-pane fade" id="delete">
+                <h4 class="mt-2">Delete worker</h4>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
