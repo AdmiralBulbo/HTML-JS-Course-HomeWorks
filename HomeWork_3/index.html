@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Creating Dynamic Tabs in Bootstrap 4 via JavaScript</title>
+    <title>Home Work 3</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -38,9 +38,6 @@
             <li class="nav-item">
                 <a href="#update" class="nav-link">Update</a>
             </li>
-            <li class="nav-item">
-                <a href="#delete" class="nav-link">Delete</a>
-            </li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane fade show active" id="create">
@@ -61,11 +58,16 @@
                             <option>Female</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="cage">Position</label>
+                        <input type="text" class="form-control" id="cposition" placeholder="Enter your position">
+                    </div>
                     <button type="submit" id='cbutton' class="btn btn-primary">Submit</button>
                 </form>
             </div>
             <div class="tab-pane fade" id="read">
                 <h4 class="mt-2">All workers</h4>
+                <button id='rbutton' class="btn btn-primary">Update</button>
                 <table class="table">
                     <thead>
                         <tr>
@@ -73,6 +75,9 @@
                             <th scope="col">Name</th>
                             <th scope="col">Age</th>
                             <th scope="col">Gender</th>
+                            <th scope="col">Position</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                         </tr>
                     </thead>
                     <tbody id='rTBody'>
