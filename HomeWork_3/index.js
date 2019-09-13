@@ -1,3 +1,4 @@
+//CREATE
 function onCreate(ev) {
     ev.preventDefault();
 
@@ -14,6 +15,7 @@ function onCreate(ev) {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             document.getElementById("createForm").dispatchEvent(new Event('submit'));
+            onRead();
         }
     });
 
@@ -22,13 +24,13 @@ function onCreate(ev) {
     xhr.send(data);
 }
 
+//READ
 function onRead() {
     xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            console.log(this.response);
             result = JSON.parse(this.response);
             var resultTBody = document.createElement('tbody');
             //resultTBody.id = 'rTBody';
@@ -39,7 +41,7 @@ function onRead() {
             var table = document.getElementById('rTBody').parentElement;
             table.replaceChild(resultTBody, document.getElementById('rTBody'));
             resultTBody.id = 'rTBody';
-            console.log('success');
+            console.log('Workers table succsesfully readed.');
         }
     });
 
@@ -48,6 +50,7 @@ function onRead() {
     xhr.send();
 }
 
+//Table parser
 function parseWorkersToTableRow(workers) {
     var row = document.createElement('tr');
 
@@ -71,43 +74,66 @@ function parseWorkersToTableRow(workers) {
     position.innerText = workers['position'];
     row.appendChild(position);
 
-    //Delete button
-    deletetd = document.createElement('td');
-    deletetd.id = workers['id'];
-    deletebtn = document.createElement('button');
-    deletebtn.className = "btn btn-danger";
-    deletebtn.innerText = "Delete";
-    deletebtn.addEventListener('click', onDelete);
-    deletetd.appendChild(deletebtn)
-    row.appendChild(deletetd);
-
     //Update button
     updatetd = document.createElement('td');
     updatetd.id = workers['id'];
     updatebtn = document.createElement('button');
-    updatebtn.className = "btn btn-info";
-    updatebtn.innerText = "Update";
-    updatebtn.addEventListener('click', onUpdate);
+    updatebtn.className = "btn btn-outline-primary";
+    updatebtn.innerHTML = '<i class="fa fa-pencil" aria-hidden="true"></i>';
+    updatebtn.addEventListener('click', modalOpen);
     updatetd.appendChild(updatebtn);
     row.appendChild(updatetd);
+
+    //Delete button
+    deletetd = document.createElement('td');
+    deletetd.id = workers['id'];
+    deletebtn = document.createElement('button');
+    deletebtn.className = "btn btn-outline-danger";
+    deletebtn.innerHTML = '<i class="fa fa-trash-o" aria-hidden="true"></i>';
+    deletebtn.addEventListener('click', onDelete);
+    deletetd.appendChild(deletebtn)
+    row.appendChild(deletetd);
 
     return row;
 }
 
-function onUpdate() {
-    alert(this.parentNode.id);
-    var url = location.href;
-    location.href = '#update';
-    history.replaceState(null,null, url);
+//UPDATE
+function onUpdate(ev) {
+    ev.preventDefault();
+
+    var data = JSON.stringify({
+        "name": String(document.getElementById("uname").value),
+        "age": String(document.getElementById("uage").value),
+        "sex": String(document.getElementById("usex").value),
+        "position": String(document.getElementById("uposition").value)
+    });
+    //console.log(data);
+    xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            //console.log(this.responseText);
+            onRead();
+        }
+    });
+
+    xhr.open("PUT", "http://localhost:2403/workers/"+document.getElementById("uid").value);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(data);
+
+    modalClose();
 }
 
+//DELETE
 function onDelete() {
     xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
-            console.log(this.responseText);
+            //console.log(this.responseText);
+            onRead();
         }
     });
 
@@ -116,13 +142,25 @@ function onDelete() {
     xhr.send();
 };
 
+function modalOpen() {
+    $("#modalContactForm").modal();
+    document.getElementById('uid').value = this.parentNode.id;
+}
+
+function modalClose() {
+    $("#modalContactForm").modal('hide');
+}
+
 (function () {
+    onRead();
     document.getElementById('cbutton').addEventListener(
         'click', onCreate
     );
     document.getElementById('rbutton').addEventListener(
         'click', onRead
     );
-    onRead();
+    document.getElementById('ubutton').addEventListener(
+        'click', onUpdate
+    );
     console.log('Handlers is set')
 })()
