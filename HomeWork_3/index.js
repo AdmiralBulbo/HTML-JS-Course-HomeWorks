@@ -15,6 +15,8 @@ function onCreate(ev) {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             document.getElementById("createForm").dispatchEvent(new Event('submit'));
+
+            formCleaner();
             onRead();
         }
     });
@@ -46,6 +48,30 @@ function onRead() {
     });
 
     xhr.open("GET", "http://localhost:2403/workers");
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send();
+}
+
+//READ BY ID
+function onReadById(id) {
+    xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+
+    xhr.addEventListener("readystatechange", function () {
+        if (this.readyState === 4) {
+            result = JSON.parse(this.response);
+
+            //Used to fill update pop-up form with current values
+            document.getElementById('uid').value = result['id'];
+            document.getElementById('uname').value = result['name'];
+            document.getElementById('uage').value = result['age'];
+            document.getElementById('uposition').value = result['position'];
+
+            console.log('Workers table succsesfully readed by id.');
+        }
+    });
+
+    xhr.open("GET", "http://localhost:2403/workers/" + id);
     xhr.setRequestHeader("Content-Type", "application/json");
     xhr.send();
 }
@@ -107,7 +133,6 @@ function onUpdate(ev) {
         "sex": String(document.getElementById("usex").value),
         "position": String(document.getElementById("uposition").value)
     });
-    //console.log(data);
     xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
@@ -144,15 +169,22 @@ function onDelete() {
 
 function modalOpen() {
     $("#modalContactForm").modal();
-    document.getElementById('uid').value = this.parentNode.id;
+    onReadById(this.parentNode.id);
 }
 
 function modalClose() {
     $("#modalContactForm").modal('hide');
 }
 
+function formCleaner() {
+    document.getElementById('cname').value = '';
+    document.getElementById('cage').value = '';
+    document.getElementById('cposition').value = '';
+}
+
 (function () {
     onRead();
+
     document.getElementById('cbutton').addEventListener(
         'click', onCreate
     );
