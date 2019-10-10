@@ -1,0 +1,37 @@
+{
+	"type": "Collection",
+	"properties": {
+		"name": {
+			"name": "name",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "name",
+			"order": 0
+		},
+		"age": {
+			"name": "age",
+			"type": "number",
+			"typeLabel": "number",
+			"required": true,
+			"id": "age",
+			"order": 1
+		},
+		"sex": {
+			"name": "sex",
+			"type": "string",
+			"typeLabel": "string",
+			"required": true,
+			"id": "sex",
+			"order": 2
+		},
+		"position": {
+			"name": "position",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "position",
+			"order": 3
+		}
+	}
+}

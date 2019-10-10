@@ -15,7 +15,6 @@ function onCreate(ev) {
     xhr.addEventListener("readystatechange", function () {
         if (this.readyState === 4) {
             document.getElementById("createForm").dispatchEvent(new Event('submit'));
-
             formCleaner();
             onRead();
         }
@@ -39,7 +38,7 @@ function onRead() {
             result.map(function (workers) {
                 resultTBody.appendChild(parseWorkersToTableRow(workers));
             });
-
+            console.log(this.response);
             var table = document.getElementById('rTBody').parentElement;
             table.replaceChild(resultTBody, document.getElementById('rTBody'));
             resultTBody.id = 'rTBody';
